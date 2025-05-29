@@ -1,184 +1,78 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>タイプ診断｜Habiture</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
-    .question { margin-bottom: 20px; }
-    .option { margin: 5px 0; }
-    button { padding: 10px 15px; margin-top: 20px; }
-  </style>
-  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-</head>
-<body>
-  <h2>あなたの「続け方」タイプを診断</h2>
-  <form id="quizForm">
+<html><head><meta charset="utf-8" /><title>タイプ診断｜Habiture</title><meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>body { font-family: sans-serif; padding: 20px; background: #f9f9f9; }
+.question { margin-bottom: 20px; }.option { margin: 5px 0; }button { padding: 10px 15px; margin-top: 20px; }</style>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script></head>
+<body><h2>あなたの「続け方」タイプを診断</h2>
+<form id="quizForm">
 <div class="question"><strong>Q1. どんなときにやる気が湧いてくる？</strong><br>
-        <label class="option">
-          <input type="radio" name="q0" value="PLAN" required />
-          A. 目標が明確なとき
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q0" value="SENSE" required />
-          B. 新しいことにワクワクしたとき
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q0" value="SUPPORT" required />
-          C. 誰かと一緒に進めるとき
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q0" value="AUTO" required />
-          D. 自分らしいと感じられたとき
-        </label><br>
-        </div><div class="question"><strong>Q2. 続かなかったとき、あなたの気持ちに一番近いのは？</strong><br>
-        <label class="option">
-          <input type="radio" name="q1" value="PLAN" required />
-          A. 計画通りに進まないと落ち込む
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q1" value="SENSE" required />
-          B. 飽きてしまう
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q1" value="SUPPORT" required />
-          C. 誰も見ていないとやる気が出ない
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q1" value="AUTO" required />
-          D. 意味が見いだせないとやめてしまう
-        </label><br>
-        </div><div class="question"><strong>Q3. あなたが過去にもっとも継続できた時に、“そこにあったもの”は？</strong><br>
-        <label class="option">
-          <input type="radio" name="q2" value="PLAN" required />
-          A. ゴールや進捗がはっきりしていた
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q2" value="SENSE" required />
-          B. 飽きずに楽しめる工夫があった
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q2" value="SUPPORT" required />
-          C. 誰かと一緒に取り組んでいた
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q2" value="AUTO" required />
-          D. 自分のペースで納得しながらできていた
-        </label><br>
-        </div><div class="question"><strong>Q4. もし3日間サボってしまったら？</strong><br>
-        <label class="option">
-          <input type="radio" name="q3" value="PLAN" required />
-          A. スケジュールを立て直す
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q3" value="SENSE" required />
-          B. モチベ上がる工夫を探す
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q3" value="SUPPORT" required />
-          C. 誰かに声かけてもらう
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q3" value="AUTO" required />
-          D. 自分の中で意味を再確認する
-        </label><br>
-        </div><div class="question"><strong>Q5. あなたにとって「続く」とは？</strong><br>
-        <label class="option">
-          <input type="radio" name="q4" value="PLAN" required />
-          A. 目標に近づいていると感じられること
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q4" value="SENSE" required />
-          B. 飽きずに楽しめていること
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q4" value="SUPPORT" required />
-          C. 周囲の人とつながっていること
-        </label><br>
-        
-        <label class="option">
-          <input type="radio" name="q4" value="AUTO" required />
-          D. 自分らしさを保てていること
-        </label><br>
-        </div>
-    <button type="submit">診断する</button>
-  </form>
-
-  <div id="result" style="display:none; margin-top:20px;"></div>
-
-  <script>
-    const weights = [1.2, 1.2, 1, 1, 1];
-    const pdfLinks = {
-      "PLAN": "https://drive.google.com/drive/folders/1_vWWiaYO5qZGpXKIZ21o8GphsolCtyeI",
-      "SENSE": "https://drive.google.com/drive/folders/1_vWWiaYO5qZGpXKIZ21o8GphsolCtyeI",
-      "SUPPORT": "https://drive.google.com/drive/folders/1_vWWiaYO5qZGpXKIZ21o8GphsolCtyeI",
-      "AUTO": "https://drive.google.com/drive/folders/1_vWWiaYO5qZGpXKIZ21o8GphsolCtyeI"
-    };
-
-    function countScores(formData) {
-      let scores = {PLAN:0, SENSE:0, SUPPORT:0, AUTO:0};
-      for (let i = 0; i < 5; i++) {
-        let type = formData.get("q" + i);
-        scores[type] += weights[i];
-      }
-      return scores;
+<label class="option"><input type="radio" name="q0" value="PLAN" required /> 目標が明確なとき</label><br>
+<label class="option"><input type="radio" name="q0" value="SENSE" required /> 新しいことにワクワクしたとき</label><br>
+<label class="option"><input type="radio" name="q0" value="SUPPORT" required /> 誰かと一緒に進めるとき</label><br>
+<label class="option"><input type="radio" name="q0" value="AUTO" required /> 自分らしいと感じられたとき</label><br></div>
+<div class="question"><strong>Q2. 続かなかったとき、あなたの気持ちに一番近いのは？</strong><br>
+<label class="option"><input type="radio" name="q1" value="PLAN" required /> 計画通りに進まないと落ち込む</label><br>
+<label class="option"><input type="radio" name="q1" value="SENSE" required /> 飽きてしまう</label><br>
+<label class="option"><input type="radio" name="q1" value="SUPPORT" required /> 誰も見ていないとやる気が出ない</label><br>
+<label class="option"><input type="radio" name="q1" value="AUTO" required /> 意味が見いだせないとやめてしまう</label><br></div>
+<div class="question"><strong>Q3. 過去にもっとも継続できた時に、そこにあったものは？</strong><br>
+<label class="option"><input type="radio" name="q2" value="PLAN" required /> ゴールや進捗がはっきりしていた</label><br>
+<label class="option"><input type="radio" name="q2" value="SENSE" required /> 飽きずに楽しめる工夫があった</label><br>
+<label class="option"><input type="radio" name="q2" value="SUPPORT" required /> 誰かと一緒に取り組んでいた</label><br>
+<label class="option"><input type="radio" name="q2" value="AUTO" required /> 自分のペースで納得しながらできていた</label><br></div>
+<div class="question"><strong>Q4. もし3日間サボってしまったら？</strong><br>
+<label class="option"><input type="radio" name="q3" value="PLAN" required /> スケジュールを立て直す</label><br>
+<label class="option"><input type="radio" name="q3" value="SENSE" required /> モチベ上がる工夫を探す</label><br>
+<label class="option"><input type="radio" name="q3" value="SUPPORT" required /> 誰かに声かけてもらう</label><br>
+<label class="option"><input type="radio" name="q3" value="AUTO" required /> 自分の中で意味を再確認する</label><br></div>
+<div class="question"><strong>Q5. あなたにとって「続く」とは？</strong><br>
+<label class="option"><input type="radio" name="q4" value="PLAN" required /> 目標に近づいていると感じられること</label><br>
+<label class="option"><input type="radio" name="q4" value="SENSE" required /> 飽きずに楽しめていること</label><br>
+<label class="option"><input type="radio" name="q4" value="SUPPORT" required /> 周囲の人とつながっていること</label><br>
+<label class="option"><input type="radio" name="q4" value="AUTO" required /> 自分らしさを保てていること</label><br></div>
+<button type="submit">診断する</button></form>
+<div id="result" style="display:none; margin-top:20px;"></div>
+<script>
+const weights = [1.2, 1.2, 1, 1, 1];
+const pdfLinks = {
+  PLAN: "https://drive.google.com/file/d/1NsDYrAzwZRGUQf0GAFGsof006yVPMLWq/view",
+  SENSE: "https://drive.google.com/file/d/1vnU2aHikae66TXTujX1sfPpHC9pNa5Wq/view",
+  SUPPORT: "https://drive.google.com/file/d/1Qdx3M3ewoX6nN7-hE1OHB9ld5L4act1o/view",
+  AUTO: "https://drive.google.com/file/d/1RnjPaCgdOFmI5h1dMgGHrHiaQkEG1jLH/view"
+};
+function countScores(formData) {
+  let scores = { PLAN: 0, SENSE: 0, SUPPORT: 0, AUTO: 0 };
+  for (let i = 0; i < 5; i++) {
+    scores[formData.get("q" + i)] += weights[i];
+  }
+  return scores;
+}
+function getTopType(scores) {
+  return Object.entries(scores).sort((a,b) => b[1]-a[1])[0][0];
+}
+document.getElementById("quizForm").onsubmit = async function(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const scores = countScores(formData);
+  const topType = getTopType(scores);
+  const pdfUrl = pdfLinks[topType];
+  const message = {
+    type: "text",
+    text: `あなたは「${topType}型」タイプです！\n\n▼ あなた専用PDFはこちら\n${pdfUrl}`
+  };
+  try {
+    await liff.init({ liffId: "YOUR_LIFF_ID" });
+    if (liff.isInClient()) {
+      await liff.sendMessages([message]);
+      document.getElementById("quizForm").style.display = "none";
+      document.getElementById("result").style.display = "block";
+      document.getElementById("result").innerText = "診断結果をLINEに送信しました📩";
+    } else {
+      alert("この診断はLINEアプリ内でご利用ください。");
     }
-
-    function getTopType(scores) {
-      let max = -1;
-      let topType = "";
-      for (const type in scores) {
-        if (scores[type] > max) {{
-          max = scores[type];
-          topType = type;
-        }}
-      }
-      return topType;
-    }
-
-    document.getElementById("quizForm").onsubmit = async function(e) {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const scores = countScores(formData);
-      const topType = getTopType(scores);
-      const pdfUrl = pdfLinks[topType];
-
-      const message = {{
-        type: "text",
-        text: `あなたは「${{topType}}型」です！\nあなた専用PDFはこちら：\n${{pdfUrl}}`
-      }};
-
-      try {{
-        await liff.init({ liffId: "YOUR_LIFF_ID" }); // ←ここにご自身のLIFF IDを設定
-        if (liff.isInClient()) {{
-          await liff.sendMessages([message]);
-          document.getElementById("quizForm").style.display = "none";
-          document.getElementById("result").style.display = "block";
-          document.getElementById("result").innerText = "診断結果をLINEに送信しました📩";
-        }} else {{
-          alert("この診断はLINEアプリ内でご利用ください。");
-        }}
-      }} catch (err) {{
-        console.error("送信エラー:", err);
-        alert("エラーが発生しました。LINEで開いて再度お試しください。");
-      }}
-    };
-  </script>
-</body>
-</html>
+  } catch (err) {
+    console.error("送信エラー:", err);
+    alert("エラーが発生しました。LINEで開いて再度お試しください。");
+  }
+};
+</script></body></html>
